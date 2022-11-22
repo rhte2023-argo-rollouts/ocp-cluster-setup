@@ -131,9 +131,12 @@ Additionally, each user's enviroment has a specific Argo CD instance. In order t
 - Obtain Argo CD credentials and URL
 
 ```$bash
-oc get secret argocd-cluster -o jsonpath='{.data.admin\.password}' -n user01-gitops-argocd | base64 -d
-oc get route argocd-server -n user01-gitops-argocd
+$ oc get secret argocd-cluster -o jsonpath='{.data.admin\.password}' -n user01-gitops-argocd | base64 -d
+xxx
 
+$ oc get route argocd-server -n user01-gitops-argocd
+...
+argocd-server   argocd-server-user01-gitops-argocd.apps.xxx          argocd-server   https   passthrough/Redirect   None
 ```
 
 - Access to the Argo CD console using the previous credentials
