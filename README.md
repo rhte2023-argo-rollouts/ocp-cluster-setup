@@ -126,6 +126,18 @@ NAME                              READY   STATUS    RESTARTS   AGE
 back-springboot-9d6f8c655-5rwbc   1/1     Running   0          106s
 ```
 
+Additionally, each user's enviroment has a specific Argo CD instance. In order to test the access, it is required to execute the following procedure:
+
+- Obtain Argo CD credentials and URL
+
+```$bash
+oc get secret argocd-cluster -o jsonpath='{.data.admin\.password}' -n user01-gitops-argocd | base64 -d
+oc get route argocd-server -n user01-gitops-argocd
+
+```
+
+- Access to the Argo CD console using the previous credentials
+
 ## Authors
 
 Asier Cidon @RedHat
