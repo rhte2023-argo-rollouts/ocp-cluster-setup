@@ -1,0 +1,70 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: back-springboot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-springboot-multi
+  template:
+    metadata:
+      labels:
+        app: back-springboot-multi
+    spec:
+      containers:
+        - name: back-springboot-multi
+          image: 'quay.io/acidonpe/jump-app-back-springboot:latest'
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          env:
+            - name: APP_REF_NAME
+              value: jump-app
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    blueGreen: 
+      activeService: rollout-bluegreen-active
+      previewService: rollout-bluegreen-preview
+      autoPromotionEnabled: false
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rollout-bluegreen-active
+spec:
+  ports:
+    - name: http-8443
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  type: ClusterIP
+  sessionAffinity: None
+  selector:
+    app: back-springboot-multi
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rollout-bluegreen-preview
+spec:
+  ports:
+    - name: http-8443
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  type: ClusterIP
+  sessionAffinity: None
+  selector:
+    app: back-springboot-multi
+
