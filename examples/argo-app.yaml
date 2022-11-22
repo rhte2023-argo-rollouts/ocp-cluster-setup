@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test
+spec:
+  destination:
+    namespace: user01-canary
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values-quay.yaml
+    path: .
+    repoURL: https://github.com/acidonper/jump-app-gitops.git
+    targetRevision: feature/jump-app-dev
+  syncPolicy: {}

@@ -141,6 +141,14 @@ argocd-server   argocd-server-user01-gitops-argocd.apps.xxx          argocd-serv
 
 - Access to the Argo CD console using the previous credentials
 
+- Create an Argo CD Application
+
+```$bash
+$ oc apply -f examples/argo-app.yaml -n user01-gitops-argocd
+```
+
+- Check the new application in the Argo CD console and *sync* the application
+
 ## Authors
 
 Asier Cidon @RedHat
