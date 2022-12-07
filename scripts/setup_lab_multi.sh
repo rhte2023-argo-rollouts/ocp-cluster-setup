@@ -6,8 +6,6 @@
 # Users 
 ##
 USERS="user01
-user02
-user03
 "
 
 ##
@@ -55,8 +53,12 @@ sleep 60
 ## 
 # Install Argo Rollouts
 ##
-oc new-project argo-rollouts
-kubectl apply -n argo-rollouts -f ./scripts/files/argo-rollouts-install.yaml
+kubectl apply -k ./scripts/files/argo-rollouts/
+
+## 
+# Install Service Mesh
+##
+until kubectl apply -k ./scripts/files/service-mesh/; do sleep 15; done
 
 
 for i in $USERS
