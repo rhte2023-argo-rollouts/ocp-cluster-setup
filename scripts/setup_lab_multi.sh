@@ -40,24 +40,74 @@ oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
 ##
 oc adm policy add-cluster-role-to-user admin admin
 
+##
+# Libraries
+##
+waitpodup(){
+  x=1
+  test=""
+  while [ -z "${test}" ]
+  do 
+    echo "Waiting ${x} times for pod ${1} in ns ${2}" $(( x++ ))
+    sleep 1 
+    test=$(oc get po -n ${2} | grep ${1})
+  done
+}
+
+waitoperatorpod() {
+  NS=openshift-operators
+  waitpodup $1 ${NS}
+  oc get pods -n ${NS} | grep ${1} | awk '{print "oc wait --for condition=Ready -n '${NS}' pod/" $1 " --timeout 300s"}' | sh
+}
+
+waitknativeserving() {
+  NS=knative-serving
+  waitpodup ${1} ${NS}
+  oc get pods -n ${NS} | grep ${1} | awk '{print "oc wait --for condition=Ready -n '${NS}' pod/" $1 " --timeout 300s"}' | sh
+}
+
 ## 
 # Install Pipelines Operator
 ##
 oc apply -f ./scripts/files/redhat_pipelines.yaml
-sleep 60
+echo "Waiting for Istio Operators is ready..."
+waitoperatorpod pipelines
+sleep 30
 
 ## 
 # Install GitOps Operator
 ##
 oc apply -f ./scripts/files/redhat_gitops.yaml
-sleep 60
+echo "Waiting for Istio Operators is ready..."
+waitoperatorpod gitops
+sleep 30
+
+## 
+# Install Service Mesh
+##
+echo "Creating istio namespace..."
+oc new-project istio-system
+oc label namespace istio-system argocd.argoproj.io/managed-by=openshift-gitops --overwrite
+oc new-project mesh-test
+echo "Installing Istio operator..."
+oc apply -f ./scripts/files/redhat_servicemesh.yaml
+sleep 30
+echo "Waiting for Istio Operators is ready..."
+waitoperatorpod kiali
+waitoperatorpod jaeger
+waitoperatorpod istio
+sleep 120
+echo "Installing Istio control plane..."
+oc apply -f ./scripts/files/mesh_scmp.yaml
+oc apply -f ./scripts/files/mesh_smmr.yaml
+echo "Waiting for Istio control plane is ready..."
+oc wait --for condition=Ready -n istio-system smmr/default --timeout 300s
 
 ## 
 # Install Argo Rollouts
 ##
 oc new-project argo-rollouts
 kubectl apply -n argo-rollouts -f ./scripts/files/argo-rollouts-install.yaml
-
 
 for i in $USERS
 do
@@ -79,7 +129,8 @@ do
   oc label namespace $i-canary-service-mesh argocd.argoproj.io/managed-by=$i-gitops-argocd --overwrite
   oc adm policy add-role-to-user admin $i -n $i-canary-service-mesh
   oc adm policy add-role-to-user admin system:serviceaccount:$i-gitops-argocd:argocd-argocd-application-controller -n $i-canary-service-mesh
-  
+  oc apply -f scripts/files/mesh_smm.yaml -n $i-canary-service-mesh
+
   oc new-project $i-gitops-argocd
   oc label namespace $i-gitops-argocd argocd.argoproj.io/managed-by=$i-gitops-argocd --overwrite
   oc adm policy add-role-to-user admin $i -n $i-gitops-argocd

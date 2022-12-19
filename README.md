@@ -1,6 +1,6 @@
 # Openshift Cluster Setup
 
-This repository collects the required information and procedures to setup an Openshift cluster in order to run a Argo Rollouts laboratory. 
+This repository collects the required information and procedures to setup an Openshift cluster in order to run an Argo Rollouts laboratory. 
 
 ## Prerequisites
 
