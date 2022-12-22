@@ -4,3 +4,4 @@ resources:
   - rollout.yaml
   - service.yaml
   - virtual-services.yaml
+  - cm.yaml
