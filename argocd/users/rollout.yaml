@@ -65,10 +65,6 @@ spec:
             {}
   strategy:
     canary:
-      analysis:
-        templates:
-        - templateName: dstrategies-back-analysis-template
-        startingStep: 1
       canaryService: dstrategies-back-offline
       dynamicStableScale: true
       stableService: dstrategies-back-online
