@@ -3,3 +3,4 @@ kind: Kustomization
 resources: 
   - rollout.yaml
   - service.yaml
+  - virtual-services.yaml

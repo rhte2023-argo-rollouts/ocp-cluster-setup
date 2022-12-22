@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: rollouts-demo-vsvc1
+spec:
+  gateways:
+  - dborrego-gw
+  hosts:
+  - dstrategies-back
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: dstrategies-back-offline
+      weight: 100
+    - destination:
+        host: dstrategies-back-online
+      weight: 0
+  tls:
+  - match:
+    - port: 3000
+      sniHosts:
+      - reviews.bookinfo.com
+      - localhost
+    route:
+    - destination:
+        host: dstrategies-back-offline
+      weight: 100
+    - destination:
+        host: dstrategies-back-online
+      weight: 0
