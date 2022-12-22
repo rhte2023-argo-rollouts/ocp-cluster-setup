@@ -11,7 +11,6 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: dstrategies-back
       app: dstrategies-back
   template:
     metadata:
@@ -62,15 +61,10 @@ spec:
   strategy:
     canary:
       canaryService: dstrategies-back-offline
-      dynamicStableScale: true
       stableService: dstrategies-back-online
       steps:
-      - setWeight: 25
-      - pause:
-          duration: 60s
-      - setWeight: 50
-      - pause:
-          duration: 60s
+      - setWeight: 5
+      - pause: {}
       trafficRouting:
         istio:
           virtualService:
