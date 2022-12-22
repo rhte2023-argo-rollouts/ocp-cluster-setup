@@ -6,3 +6,4 @@ resources:
   - virtual-services.yaml
   - cm.yaml
   - route.yaml
+  - gateway.yaml
