@@ -10,6 +10,6 @@ spec:
         number: 80
         protocol: HTTP
       hosts: 
-        dstrategies-back-online-dborrego.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
+        - dstrategies-back-online-dborrego.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
   selector:
     istio: ingressgateway
