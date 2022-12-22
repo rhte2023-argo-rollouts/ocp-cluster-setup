@@ -19,7 +19,7 @@ spec:
         namespace: '{{user}}'
         name: 'in-cluster'
       source:
-        repoURL: 'git@github.com:rhte2023-argo-rollouts/ocp-cluster-setup.git'
+        repoURL: 'https://github.com/rhte2023-argo-rollouts/ocp-cluster-setup.git'
         path: argocd/sm
         targetRevision: 'feature/sm-rollouts'
       syncPolicy:
