@@ -1,19 +1,3 @@
----
-# Source: dstrategies-umbrella/charts/dstrategies-backNetworkingOffline/templates/router.yaml
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  labels:
-    app.kubernetes.io/name: dstrategies-back
-  name: dstrategies-back-offline
-spec:
-  to:
-    kind: Service
-    name: dstrategies-back-offline
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
----
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
