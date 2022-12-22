@@ -1,0 +1,88 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: dstrategies-back
+  labels:
+    app.kubernetes.io/name: dstrategies-back
+    app: dstrategies-back
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dstrategies-back
+      app.kubernetes.io/instance: release-name
+      app: dstrategies-back
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /q/metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: dstrategies-back
+        app.kubernetes.io/instance: release-name
+        app: dstrategies-back
+        version: latest
+    spec:
+      serviceAccountName: default
+      securityContext:
+        {}
+      containers:
+        - name: dstrategies-back
+          securityContext:
+            {}
+          image: "b0rr3g0/error-service:0.1.3"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: "dstrategies-back-configmap-env-base"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            {}
+  strategy:
+    canary:
+      analysis:
+        templates:
+        - templateName: dstrategies-back-analysis-template
+        startingStep: 1
+      canaryService: dstrategies-back-offline
+      dynamicStableScale: true
+      stableService: dstrategies-back-online
+      steps:
+      - setWeight: 25
+      - pause:
+          duration: 60s
+      - setWeight: 50
+      - pause:
+          duration: 60s
+      trafficRouting:
+        istio:
+          virtualService:
+            name: dstrategies-back-vs
+            routes:
+            - primary
+
