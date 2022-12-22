@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: dstrategies-back-analysis-template
+  labels:
+    app.kubernetes.io/name: dstrategies-back
+    app: dstrategies-back
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  metrics:
+  - name: dstrategies-back-prometheus-metric
+    interval: 10s
+    successCondition: len(result) == 0 || result[0] >= 0.95
+    failureLimit: 2
+    provider:
+      prometheus:
+        address: 
+        query: |
+                    sum(irate( istio_requests_total{reporter="source",destination_service_name=~"dstrategies-back-online",response_code!~"5.*"}[30s] )) / sum(irate( istio_requests_total{reporter="source",destination_service_name=~"dstrategies-back-online"}[30s] ))

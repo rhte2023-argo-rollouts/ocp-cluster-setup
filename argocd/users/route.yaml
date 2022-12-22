@@ -1,0 +1,35 @@
+---
+# Source: dstrategies-umbrella/charts/dstrategies-backNetworkingOffline/templates/router.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/name: dstrategies-back
+    app.kubernetes.io/version: "1.0.0"
+  name: dstrategies-back-offline
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: dstrategies-back-offline
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/name: dstrategies-back
+    app.kubernetes.io/version: "1.0.0"
+  name: dstrategies-back-online
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: dstrategies-back-online
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
