@@ -2,12 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: dstrategies-back
-  labels:
-    app.kubernetes.io/name: dstrategies-back
-    app: dstrategies-back
-    version: 0.1.3
 spec:
-  replicas: 2
+  replicas: 5
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -26,8 +22,6 @@ spec:
         {}
       containers:
         - name: dstrategies-back
-          securityContext:
-            {}
           image: "b0rr3g0/error-service:0.1.3"
           ports:
             - name: http
@@ -64,7 +58,8 @@ spec:
       stableService: dstrategies-back-online
       steps:
       - setWeight: 5
-      - pause: {}
+      - pause:
+          duration: 2m
       trafficRouting:
         istio:
           virtualService:
