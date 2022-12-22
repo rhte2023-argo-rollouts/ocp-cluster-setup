@@ -6,6 +6,7 @@ spec:
   server:
     route:
       enabled: true
+  applicationSet: {}
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
