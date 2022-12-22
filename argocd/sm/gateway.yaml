@@ -5,11 +5,11 @@ metadata:
   namespace: dborrego
 spec:
   servers:
-    - hosts:
-      - "*"
-      port:
-        name: http2
+    - port:
+        name: http
         number: 80
-        protocol: HTTP2
+        protocol: HTTP
+      hosts: 
+        dstrategies-back-online-dborrego.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
   selector:
     istio: ingressgateway
