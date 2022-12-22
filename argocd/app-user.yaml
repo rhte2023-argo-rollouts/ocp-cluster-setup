@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: service-mesh-config
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+      - user: dborrego
+  template:
+    metadata: 
+      name: '{{user}}-service-mesh-config'
+      labels: 
+        user: '{{user}}'
+    spec:
+      project: default
+      destination:
+        namespace: '{{user}}'
+        name: 'in-cluster'
+      source:
+        repoURL: 'git@github.com:rhte2023-argo-rollouts/ocp-cluster-setup.git'
+        path: argocd/sm
+        targetRevision: 'feature/sm-rollouts'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: false
