@@ -1,0 +1,15 @@
+kind: Gateway
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: dborrego-gw
+  namespace: dborrego
+spec:
+  servers:
+    - hosts:
+      - "*"
+      port:
+        name: http2
+        number: 80
+        protocol: HTTP2
+  selector:
+    istio: ingressgateway
