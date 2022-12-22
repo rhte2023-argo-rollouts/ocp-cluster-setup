@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: rollouts-demo-vsvc1
+  name: dstrategies-back-vs
 spec:
   gateways:
   - dborrego-gw
