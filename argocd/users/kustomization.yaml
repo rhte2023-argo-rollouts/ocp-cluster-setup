@@ -5,3 +5,4 @@ resources:
   - service.yaml
   - virtual-services.yaml
   - cm.yaml
+  - route.yaml
