@@ -22,7 +22,7 @@ spec:
         {}
       containers:
         - name: dstrategies-back
-          image: "b0rr3g0/error-service:0.2"
+          image: "b0rr3g0/error-service:0.2.1"
           ports:
             - name: http
               containerPort: 8080
