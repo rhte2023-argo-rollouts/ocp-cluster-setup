@@ -8,8 +8,6 @@ metadata:
     app.kubernetes.io/version: "1.0.0"
   name: dstrategies-back-offline
 spec:
-  port:
-    targetPort: 8080
   to:
     kind: Service
     name: dstrategies-back-offline
@@ -25,8 +23,6 @@ metadata:
     app.kubernetes.io/version: "1.0.0"
   name: dstrategies-back-online
 spec:
-  port:
-    targetPort: 8080
   to:
     kind: Service
     name: dstrategies-back-online
