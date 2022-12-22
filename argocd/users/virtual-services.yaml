@@ -6,13 +6,13 @@ spec:
   gateways:
   - dborrego-gw
   hosts:
-  - dstrategies-back.dborrego.svc.cluster.local
+  - dstrategies-back-online-dborrego.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
   http:
   - name: primary
     route:
     - destination:
-        host: dstrategies-back-offline
+        host: dstrategies-back-online
       weight: 100
     - destination:
-        host: dstrategies-back-online
+        host: dstrategies-back-offline
       weight: 0
