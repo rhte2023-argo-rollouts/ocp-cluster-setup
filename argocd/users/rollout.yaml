@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: dstrategies-back
-      app.kubernetes.io/instance: release-name
       app: dstrategies-back
   template:
     metadata:
