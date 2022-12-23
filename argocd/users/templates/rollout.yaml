@@ -9,7 +9,7 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: {{ include "service.selectorLabels" . }}
+      app: {{ include "service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
