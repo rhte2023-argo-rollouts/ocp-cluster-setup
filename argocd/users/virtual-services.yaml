@@ -12,7 +12,9 @@ spec:
     route:
     - destination:
         host: dstrategies-back-online
+        subset: stable
       weight: 100
     - destination:
-        host: dstrategies-back-offline
+        host: dstrategies-back-online
+        subset: canary
       weight: 0

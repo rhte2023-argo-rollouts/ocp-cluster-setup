@@ -54,8 +54,6 @@ spec:
             {}
   strategy:
     canary:
-      canaryService: dstrategies-back-offline
-      stableService: dstrategies-back-online
       steps:
       - setWeight: 5
       - pause:
@@ -66,4 +64,8 @@ spec:
             name: dstrategies-back-vs
             routes:
             - primary
+          destinationRule:
+            name: dstrategies-back-dr
+            canarySubsetName: canary
+            stableSubsetName: stable 
 
