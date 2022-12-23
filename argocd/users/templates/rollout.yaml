@@ -64,5 +64,5 @@ spec:
           destinationRule:
             name: {{ include "service.name" . }}-dr
             canarySubsetName: canary
-            stableSubsetName: stable 
+            stableSubsetName: stable
 
