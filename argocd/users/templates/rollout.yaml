@@ -31,7 +31,7 @@ spec:
             failureThreshold: 3
             httpGet:
               path: /api/v1/health
-              port: 8080
+              port: "{{ .Values.service.port }}"
               scheme: HTTP
             initialDelaySeconds: 0
             periodSeconds: 30
@@ -41,7 +41,7 @@ spec:
             failureThreshold: 3
             httpGet:
               path: /api/v1/health
-              port: 8080
+              port: "{{ .Values.service.port }}"
               scheme: HTTP
             initialDelaySeconds: 0
             periodSeconds: 30
