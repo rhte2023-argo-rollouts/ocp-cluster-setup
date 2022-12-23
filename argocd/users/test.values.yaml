@@ -3,4 +3,3 @@ service:
   image:
     repository: b0rr3g0/error-service
     version: 0.2
-  port: 8080
