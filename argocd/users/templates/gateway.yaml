@@ -1,8 +1,7 @@
 kind: Gateway
 apiVersion: networking.istio.io/v1alpha3
 metadata:
-  name: dborrego-gw
-  namespace: dborrego
+  name: {{ .Release.Namespace }}-gw
 spec:
   servers:
     - port:
@@ -10,6 +9,6 @@ spec:
         number: 80
         protocol: HTTP
       hosts: 
-        - dstrategies-back-online-dborrego.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
+        - dstrategies-back-online-{{ .Release.Namespace }}.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
   selector:
     istio: ingressgateway
