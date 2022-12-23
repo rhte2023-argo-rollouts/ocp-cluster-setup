@@ -4,7 +4,7 @@ metadata:
   name: dstrategies-back
   labels:
     app: dstrategies-back
-    version: 0.2
+    version: "0.2"
 spec:
   replicas: 5
   revisionHistoryLimit: 2
