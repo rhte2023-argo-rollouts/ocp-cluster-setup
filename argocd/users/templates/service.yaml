@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "service.name" . }}
   labels:
-    app: {{ include "service.name" . }}
+    {{- include "service.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
