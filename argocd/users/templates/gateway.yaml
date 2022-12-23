@@ -1,7 +1,7 @@
 kind: Gateway
 apiVersion: networking.istio.io/v1alpha3
 metadata:
-  name: {{ .Release.Namespace }}
+  name: {{ include "service.name" . }}
 spec:
   servers:
     - port:
