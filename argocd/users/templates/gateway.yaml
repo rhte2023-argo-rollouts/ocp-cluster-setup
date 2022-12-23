@@ -9,6 +9,6 @@ spec:
         number: 80
         protocol: HTTP
       hosts: 
-        - {{ include "service.name" . }}-{{ .Release.Namespace }}.apps.{{ .Values.dns }}
+        - {{ include "service.name" . }}-dborrego-{{ .Release.Namespace }}.apps.{{ .Values.dns }}
   selector:
     istio: ingressgateway
