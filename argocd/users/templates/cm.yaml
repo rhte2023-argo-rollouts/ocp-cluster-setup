@@ -3,12 +3,9 @@ kind: ConfigMap
 metadata:
   name: "dstrategies-back-configmap-env-base"
   labels:
-    helm.sh/chart: dstrategies-back-0.1.0
     app.kubernetes.io/name: dstrategies-back
-    app.kubernetes.io/instance: release-name
     app: dstrategies-back
-    app.kubernetes.io/version: "1.0.0"
-    app.kubernetes.io/managed-by: Helm
+    version: "0.2"
 data:
   application.version: latest
   quarkus.log.level: DEBUG

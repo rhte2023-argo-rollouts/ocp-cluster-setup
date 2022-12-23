@@ -1,30 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: dstrategies-back
+  name: {{ include "service.name" . }}
   labels:
-    app: dstrategies-back
-    version: "0.2"
+    {{- include "service.labels" . | nindent 4 }}
 spec:
   replicas: 5
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: dstrategies-back
+      app: {{ include "service.name" . }}
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: "true"
       labels:
-        app.kubernetes.io/name: dstrategies-back
-        app: dstrategies-back
-        version: "0.2"
+        {{- include "service.labels" . | nindent 6 }}
     spec:
-      serviceAccountName: default
-      securityContext:
-        {}
       containers:
-        - name: dstrategies-back
+        - name: {{ include "service.name" . }}
           image: "b0rr3g0/error-service:0.2"
           ports:
             - name: http
@@ -32,7 +26,7 @@ spec:
               protocol: TCP
           envFrom:
           - configMapRef:
-              name: "dstrategies-back-configmap-env-base"
+              name: "{{ include "service.name" . }}-configmap-env-base"
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -64,11 +58,11 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: dstrategies-back-vs
+            name: {{ include "service.name" . }}-vs
             routes:
             - primary
           destinationRule:
-            name: dstrategies-back-dr
+            name: {{ include "service.name" . }}-dr
             canarySubsetName: canary
             stableSubsetName: stable 
 
