@@ -87,7 +87,6 @@ sleep 30
 ##
 echo "Creating istio namespace..."
 oc new-project istio-system
-oc label namespace istio-system argocd.argoproj.io/managed-by=openshift-gitops --overwrite
 oc new-project mesh-test
 echo "Installing Istio operator..."
 oc apply -f ./scripts/files/redhat_servicemesh.yaml
@@ -100,6 +99,9 @@ sleep 120
 echo "Installing Istio control plane..."
 oc apply -f ./scripts/files/mesh_scmp.yaml
 oc apply -f ./scripts/files/mesh_smmr.yaml
+echo "Extend monitoring Istio control plane..."
+oc policy add-role-to-user view system:serviceaccount:openshift-monitoring:prometheus-k8s -n istio-system
+oc apply -f ./scripts/files/mesh_service_monitor.yaml
 echo "Waiting for Istio control plane is ready..."
 oc wait --for condition=Ready -n istio-system smmr/default --timeout 300s
 
@@ -129,6 +131,7 @@ do
   oc label namespace $i-canary-service-mesh argocd.argoproj.io/managed-by=$i-gitops-argocd --overwrite
   oc adm policy add-role-to-user admin $i -n $i-canary-service-mesh
   oc adm policy add-role-to-user admin system:serviceaccount:$i-gitops-argocd:argocd-argocd-application-controller -n $i-canary-service-mesh
+  oc adm policy add-role-to-user admin system:serviceaccount:$i-gitops-argocd:argocd-argocd-application-controller -n istio-system
   oc apply -f scripts/files/mesh_smm.yaml -n $i-canary-service-mesh
 
   oc new-project $i-gitops-argocd

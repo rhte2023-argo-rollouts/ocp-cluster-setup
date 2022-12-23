@@ -14786,6 +14786,13 @@ spec:
   selector:
     app.kubernetes.io/name: argo-rollouts
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    service.beta.openshift.io/inject-cabundle: 'true'
+  name: cabundle
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14833,6 +14840,30 @@ spec:
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 4
+        volumeMounts:
+        - mountPath: /etc/ssl/certs/
+          name: ca-certs
+          readOnly: true
+      initContainers:
+      - name: init-ca-certs
+        image: registry.redhat.io/rhel8/support-tools
+        command: ['bash', '-c', "cat /etc/ssl/certs/ca-bundle.crt >> /opt/bundles/ca-bundle.crt; cat /etc/ssl/certs/ca-bundle.trust.crt >> /opt/bundles/ca-bundle.trust.crt; cat /opt/certs/ca-certificates.crt >> /opt/bundles/ca-bundle.crt"]
+        volumeMounts:
+        - mountPath: /opt/certs/ca-certificates.crt
+          name: cabundle
+          subPath: ca-certificates.crt
+        - mountPath: /opt/bundles
+          name: ca-certs
+      volumes:
+      - name: ca-certs
+        emptyDir: {}
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: service-ca.crt
+            path: ca-certificates.crt
+          name: cabundle
+        name: cabundle
       securityContext:
         runAsNonRoot: true
       serviceAccountName: argo-rollouts
