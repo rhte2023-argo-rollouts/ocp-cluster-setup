@@ -58,6 +58,8 @@ spec:
       trafficRouting:
         istio:
           virtualService:
+            routes:
+            - primary
             name: {{ include "service.name" . }}
           destinationRule:
             name: {{ include "service.name" . }}
