@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: dstrategies-back-dr
+  name: {{ include "service.name" . }}
 spec:
-  host: dstrategies-back-online
+  host: {{ include "service.name" . }}
   subsets:
   - name: canary   
     labels:        
-      app: dstrategies-back
+      app: {{ include "service.name" . }}
   - name: stable   
     labels:        
-      app: dstrategies-back
+      app: {{ include "service.name" . }}

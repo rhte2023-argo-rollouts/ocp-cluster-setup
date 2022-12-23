@@ -58,11 +58,11 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: {{ include "service.name" . }}-vs
+            name: {{ include "service.name" . }}
             routes:
             - primary
           destinationRule:
-            name: {{ include "service.name" . }}-dr
+            name: {{ include "service.name" . }}
             canarySubsetName: canary
             stableSubsetName: stable
 
