@@ -22,6 +22,10 @@ spec:
         repoURL: 'https://github.com/rhte2023-argo-rollouts/ocp-cluster-setup.git'
         path: argocd/sm
         targetRevision: 'feature/sm-rollouts'
+        helm:
+          valueFiles:
+            - 'test.values.yaml'
+
       syncPolicy:
         automated:
           prune: true
