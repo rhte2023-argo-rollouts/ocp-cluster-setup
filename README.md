@@ -16,6 +16,8 @@ First of all, it is required to create a set of users, operators and much more o
 - A new Auth Provider in Openshift
 - Openshift GitOps operator
 - Openshift Pipelines operator
+- Openshift Service Mesh Operator
+- Openshift Service Mesh Control Plane
 - Argo Rollout Controller
 - Multiple resources per user
   - 3 namespaces to deploy applications
@@ -47,6 +49,14 @@ user04
 
 ```$bash
 $ sh scripts/setup_lab_multi.sh
+```
+
+## Obtain Red Hat Service Mesh Prometheus Password
+
+In order to obtain the password required to authenticate with prometheus, in urlencode format, is neccesary to execute the following command:
+
+```$bash
+$ sh scripts/obtain_prometheus_pass.sh
 ```
 
 ## Testing Users Environment
