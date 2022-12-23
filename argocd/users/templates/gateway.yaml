@@ -8,8 +8,7 @@ spec:
         name: http
         number: 80
         protocol: HTTP
-        protocol: TCP
       hosts: 
-        - {{ include "service.name" . }}-{{ .Release.Namespace }}.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
+        - {{ include "service.name" . }}-{{ .Release.Namespace }}.apps.{{ .Values.dns }}
   selector:
     istio: ingressgateway

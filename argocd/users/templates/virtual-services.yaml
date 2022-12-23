@@ -6,7 +6,7 @@ spec:
   gateways:
   - {{ include "service.name" . }}
   hosts:
-  - {{ include "service.name" . }}-{{ .Release.Namespace }}.apps.cluster-5tgc2.5tgc2.sandbox2406.opentlc.com
+  - {{ include "service.name" . }}-{{ .Release.Namespace }}.apps.{{ .Values.dns }}
   http:
   - name: primary
     route:
