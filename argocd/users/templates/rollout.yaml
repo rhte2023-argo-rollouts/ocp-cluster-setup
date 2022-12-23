@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "service.labels" . | nindent 4 }}
 spec:
-  replicas: 5
+  replicas: {{ .Values.service.replicas }}
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: {{ include "service.name" . }}
-          image: "b0rr3g0/error-service:0.2"
+          image: "{{ .Values.service.image.repository }}:{{ .Values.service.image.version }}"
           ports:
             - name: http
               containerPort: 8080

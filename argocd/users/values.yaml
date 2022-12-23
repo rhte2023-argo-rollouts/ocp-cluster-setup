@@ -3,3 +3,4 @@ service:
   image:
     repository: no-default-value
     version: no-default-value
+  replicas: 10
