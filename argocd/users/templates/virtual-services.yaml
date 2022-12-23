@@ -6,7 +6,7 @@ spec:
   gateways:
   - {{ include "service.name" . }}
   hosts:
-  - {{ include "service.name" . }}-dborrego-{{ .Release.Namespace }}.apps.{{ .Values.dns }}
+  - dstrategies-back-dborrego-istio-system.apps.acidonpe19.sandbox2617.opentlc.com
   http:
   - name: primary
     route:
