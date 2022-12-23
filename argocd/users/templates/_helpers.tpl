@@ -6,7 +6,7 @@
 
 /* service.version */
 {{- define "service.version" -}}
-{{- default .Values.service.image.version .Values.versionOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Values.service.image.version | quote }}
 {{- end }}
 
 /* service.labels */
