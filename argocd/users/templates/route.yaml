@@ -5,7 +5,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: {{ include "service.name" . }}
+    name: istio-ingressgateway
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
