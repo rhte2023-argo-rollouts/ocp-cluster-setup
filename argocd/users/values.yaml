@@ -1,0 +1,10 @@
+service:
+  name: dstrategies-back
+  image:
+    name: no-default-value
+    repository: no-default-value
+    version: no-default-value
+  replicas: 5
+  port: 8080
+  route: 
+    enabled: true
