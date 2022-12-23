@@ -2,8 +2,6 @@ kind: Gateway
 apiVersion: networking.istio.io/v1alpha3
 metadata:
   name: {{ include "service.name" . }}
-  labels:
-    {{- include "service.labels" . | nindent 4 }}
 spec:
   servers:
     - port:
