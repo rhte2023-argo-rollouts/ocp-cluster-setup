@@ -11,10 +11,10 @@ spec:
   - name: primary
     route:
     - destination:
-        host: {{ include "service.name" . | quote}}
+        host: {{ include "service.name" . }}
         subset: stable
       weight: 100
     - destination:
-        host: {{ include "service.name" . | quote }}
+        host: {{ include "service.name" . }}
         subset: canary
       weight: 0
