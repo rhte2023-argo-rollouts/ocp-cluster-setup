@@ -7,3 +7,4 @@ resources:
   - cm.yaml
   - route.yaml
   - gateway.yaml
+  - destination-rule.yaml
