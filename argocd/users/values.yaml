@@ -4,4 +4,4 @@ service:
     repository: no-default-value
     version: no-default-value
   replicas: 5
-  port: "8080"
+  port: 8080
