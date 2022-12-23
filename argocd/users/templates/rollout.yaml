@@ -59,8 +59,6 @@ spec:
         istio:
           virtualService:
             name: {{ include "service.name" . }}
-            routes:
-            - primary
           destinationRule:
             name: {{ include "service.name" . }}
             canarySubsetName: canary
