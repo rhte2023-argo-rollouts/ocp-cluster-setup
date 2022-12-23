@@ -9,7 +9,7 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: {{ include "service.name" . }}
+      app: {{ include "service.selectorLabels" . }}
   template:
     metadata:
       annotations:
