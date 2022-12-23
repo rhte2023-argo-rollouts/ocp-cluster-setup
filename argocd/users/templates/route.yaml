@@ -1,7 +1,7 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ include "service.name" . }}
+  name: {{ include "service.name" . }}-dborrego
   namespace: istio-system
 spec:
   to:
