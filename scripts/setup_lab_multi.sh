@@ -6,8 +6,6 @@
 # Users 
 ##
 USERS="user01
-user02
-user03
 "
 
 ##
@@ -108,8 +106,12 @@ oc wait --for condition=Ready -n istio-system smmr/default --timeout 300s
 ## 
 # Install Argo Rollouts
 ##
-oc new-project argo-rollouts
-kubectl apply -n argo-rollouts -f ./scripts/files/argo-rollouts-install.yaml
+kubectl apply -k ./scripts/files/argo-rollouts/
+
+## 
+# Install Service Mesh
+##
+until kubectl apply -k ./scripts/files/service-mesh/; do sleep 15; done
 
 for i in $USERS
 do
