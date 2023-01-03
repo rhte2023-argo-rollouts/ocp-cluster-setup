@@ -144,4 +144,37 @@ do
   ##
   oc apply -f ./scripts/files/argocd.yaml -n $i-gitops-argocd
 
+  ##
+  # Create Routes for istio-system namespaces
+  ##
+cat << EOF | oc apply -f -
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: dstrategies-back-$i-canary-service-mesh
+  namespace: istio-system
+spec:
+  to:
+    kind: Service
+    name: istio-ingressgateway
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+EOF
+
+cat << EOF | oc apply -f -
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: dstrategies-frontend-$i-canary-service-mesh
+  namespace: istio-system
+spec:
+  to:
+    kind: Service
+    name: istio-ingressgateway
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+EOF
+
 done
