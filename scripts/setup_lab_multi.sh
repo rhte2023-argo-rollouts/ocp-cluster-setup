@@ -160,6 +160,8 @@ spec:
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: http2
 EOF
 
 cat << EOF | oc apply -f -
@@ -175,6 +177,8 @@ spec:
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: http2
 EOF
 
 done
