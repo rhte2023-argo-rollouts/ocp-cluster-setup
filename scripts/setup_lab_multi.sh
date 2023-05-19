@@ -117,10 +117,10 @@ kubectl apply -n argo-rollouts -f ./scripts/files/argo-rollouts-install.yaml
 oc apply -f scripts/files/webterminal/dev-workspaces-operator.yaml
 waitoperatorpod devworkspace-controller
 waitoperatorpod devworkspace-webhook
-oc apply -f scripts/files/webterminal/web-terminal-exec.yaml
-oc apply -f scripts/files/webterminal/web-terminal-tooling.yaml
 oc apply -f scripts/files/webterminal/webterminal-operator.yaml
 waitoperatorpod web-terminal-controller
+oc apply -f scripts/files/webterminal/web-terminal-exec.yaml
+oc apply -f scripts/files/webterminal/web-terminal-tooling.yaml
 
 for i in $USERS
 do
