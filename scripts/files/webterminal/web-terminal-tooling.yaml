@@ -1,0 +1,21 @@
+apiVersion: workspace.devfile.io/v1alpha2
+kind: DevWorkspaceTemplate
+metadata:
+  name: web-terminal-tooling
+  namespace: openshift-operators
+spec:
+  components:
+    - container:
+        args:
+          - tail
+          - '-f'
+          - /dev/null
+        cpuLimit: 400m
+        cpuRequest: 100m
+        image: >-
+          quay.io/acidonpe/web-terminal-tooling-rhel8-custom:1.7
+        memoryLimit: 256Mi
+        memoryRequest: 128Mi
+        mountSources: false
+        sourceMapping: /projects
+      name: web-terminal-tooling

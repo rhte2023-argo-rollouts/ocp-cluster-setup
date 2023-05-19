@@ -111,6 +111,17 @@ oc wait --for condition=Ready -n istio-system smmr/default --timeout 300s
 oc new-project argo-rollouts
 kubectl apply -n argo-rollouts -f ./scripts/files/argo-rollouts-install.yaml
 
+## 
+# Install Web Terminal
+##
+oc apply -f scripts/files/webterminal/dev-workspaces-operator.yaml
+waitoperatorpod devworkspace-controller
+waitoperatorpod devworkspace-webhook
+oc apply -f scripts/files/webterminal/web-terminal-exec.yaml
+oc apply -f scripts/files/webterminal/web-terminal-tooling.yaml
+oc apply -f scripts/files/webterminal/webterminal-operator.yaml
+waitoperatorpod web-terminal-controller
+
 for i in $USERS
 do
 
