@@ -39,6 +39,6 @@ spec:
       enabled: true
     prometheus:
       enabled: true
-  version: v2.0
+  version: v2.3
   telemetry:
     type: Istiod
